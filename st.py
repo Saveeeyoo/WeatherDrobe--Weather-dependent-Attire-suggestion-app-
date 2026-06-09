@@ -1,0 +1,22 @@
+import streamlit as st
+from weathernot import main, get_weather, suggest_attire ,get_coords
+
+
+
+st.title("weather attire advisor")
+st.write("Enter a city name to get current weather conditions and attire suggestions.")
+city = st.text_input("City Name", key="city_input")
+if st.button("Get Weather"):
+    lat , lon = get_coords(city)
+    if lat is None or lon is None:
+        st.error("Invalid city name. Please try again.")
+    else:
+        temp, humidity, wind, wmo, precip = get_weather(lat,lon)
+        st.write(f"Current temperature: {temp}°C")
+        st.write(f"Current humidity: {humidity}%") 
+        st.write(f"Current wind speed: {wind}MPH")
+        st.write(f"Current wmo code: {wmo}")
+        st.write(f"Current precipitation: {precip}mm")
+        outfit_advice = suggest_attire(temp, humidity, wind, wmo, precip)
+        st.success(f"Weather Advice: {outfit_advice}")
+        

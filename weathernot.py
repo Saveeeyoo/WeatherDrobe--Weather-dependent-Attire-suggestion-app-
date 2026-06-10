@@ -1,15 +1,10 @@
 import requests
 
 def get_coords(city_name):
-    geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
+    geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=10&language=en&format=json"
     res = requests.get(geo_url).json()
-    
-    if "results" in res:
-        result = res["results"][0]
-        return result["latitude"], result["longitude"]
-    return None, None
-
-
+    results = res.get("results", [])
+    return results
 
 def main(city):
     lat, lon = get_coords(city)
@@ -21,11 +16,12 @@ def main(city):
     
 def get_weather(lat, lon):
     import openmeteo_requests
+    import pandas as pd
 
-    # Setup the Open-Meteo API client
+    #Setup the Open-Meteo API client
     openmeteo = openmeteo_requests.Client()
 
-    #  Define your parameters 
+    #Define your parameters (Coordinates for Mumbai)
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
         "latitude": lat,
@@ -34,11 +30,11 @@ def get_weather(lat, lon):
         "hourly": "temperature_2m"
     }
 
-    # Get the data
+    #Get the data
     responses = openmeteo.weather_api(url, params=params)
     response = responses[0]
 
-    # print current temperature
+    #Print current temperature
     current = response.Current()
     temp=round(current.Variables(0).Value(), 1)
     humidity=round(current.Variables(1).Value(), 1)

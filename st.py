@@ -6,11 +6,26 @@ from weathernot import get_weather, suggest_attire ,get_coords
 st.title("weather attire advisor")
 st.write("Enter a city name to get current weather conditions and attire suggestions.")
 city = st.text_input("City Name", key="city_input")
+if "choices" not in st.session_state:
+    st.session_state.choices = []
+selected = None
 if st.button("Get Weather"):
-    lat , lon = get_coords(city)
-    if lat is None or lon is None:
+    st.session_state.choices = get_coords(city)
+    
+selected = st.selectbox(
+"Choose location",
+st.session_state.choices,
+index=None,
+placeholder="Choose a location",
+format_func=lambda r: f"{r['name']}, {r['country']}"
+)
+
+if selected:
+   lat = selected["latitude"]
+   lon = selected["longitude"]
+   if lat is None or lon is None:
         st.error("Invalid city name. Please try again.")
-    else:
+   else:
         temp, humidity, wind, wmo, precip = get_weather(lat,lon)
         st.write(f"Current temperature: {temp}°C")
         st.write(f"Current humidity: {humidity}%") 

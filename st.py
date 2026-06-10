@@ -1,15 +1,13 @@
 import streamlit as st
 from weathernot import get_weather, suggest_attire ,get_coords
 
-
+if "choices" not in st.session_state:
+    st.session_state.choices = []
 
 st.title("weather attire advisor")
 st.write("Enter a city name to get current weather conditions and attire suggestions.")
 city = st.text_input("City Name", key="city_input")
-if "choices" not in st.session_state:
-    st.session_state.choices = []
-
-if st.button("Get Weather"):
+if len(city) >= 3:
     st.session_state.choices = get_coords(city)
     
 selected = st.selectbox(

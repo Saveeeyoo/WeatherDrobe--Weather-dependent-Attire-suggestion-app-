@@ -1,5 +1,4 @@
 import requests
-import streamlit as st
 
 def get_coords(city_name):
     geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
@@ -13,24 +12,20 @@ def get_coords(city_name):
 
 
 def main(city):
-    '''print("Enter City Name:")
-    city = input()'''
-    # Now you can use it like this:
     lat, lon = get_coords(city)
     if lat ==None or lon == None:
         print("Invalid city name. Please try again.")
         return main()
     return lat, lon
-    # Then call your weather function from the previous step!
+    
     
 def get_weather(lat, lon):
     import openmeteo_requests
-    import pandas as pd
 
-    # 1. Setup the Open-Meteo API client
+    # Setup the Open-Meteo API client
     openmeteo = openmeteo_requests.Client()
 
-    # 2. Define your parameters (Coordinates for Mumbai)
+    #  Define your parameters 
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
         "latitude": lat,
@@ -39,11 +34,11 @@ def get_weather(lat, lon):
         "hourly": "temperature_2m"
     }
 
-    # 3. Get the data
+    # Get the data
     responses = openmeteo.weather_api(url, params=params)
     response = responses[0]
 
-    # 4. Print current temperature
+    # print current temperature
     current = response.Current()
     temp=round(current.Variables(0).Value(), 1)
     humidity=round(current.Variables(1).Value(), 1)

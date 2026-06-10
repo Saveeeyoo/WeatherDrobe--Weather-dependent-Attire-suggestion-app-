@@ -1,5 +1,5 @@
 import streamlit as st
-from weathernot import main, get_weather, suggest_attire ,get_coords
+from weathernot import get_weather, suggest_attire ,get_coords
 
 
 

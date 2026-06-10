@@ -5,18 +5,10 @@ def get_coords(city_name):
     res = requests.get(geo_url).json()
     results = res.get("results", [])
     return results
-
-def main(city):
-    lat, lon = get_coords(city)
-    if lat ==None or lon == None:
-        print("Invalid city name. Please try again.")
-        return main()
-    return lat, lon
     
     
 def get_weather(lat, lon):
     import openmeteo_requests
-    import pandas as pd
 
     #Setup the Open-Meteo API client
     openmeteo = openmeteo_requests.Client()

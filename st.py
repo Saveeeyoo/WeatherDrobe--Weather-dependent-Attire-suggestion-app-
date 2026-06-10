@@ -8,7 +8,7 @@ st.write("Enter a city name to get current weather conditions and attire suggest
 city = st.text_input("City Name", key="city_input")
 if "choices" not in st.session_state:
     st.session_state.choices = []
-selected = None
+
 if st.button("Get Weather"):
     st.session_state.choices = get_coords(city)
     

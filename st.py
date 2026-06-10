@@ -10,14 +10,14 @@ if "choices" not in st.session_state:
     st.session_state.choices = []
 
 if st.button("Get Weather"):
-    st.session_state.choices = set(get_coords(city))
+    st.session_state.choices = get_coords(city)
     
 selected = st.selectbox(
 "Choose location",
 st.session_state.choices,
 index=None,
 placeholder="Choose a location",
-format_func=lambda r: f"{r['name']}, {r['country']}"
+format_func=lambda r: f"{r['name']}, {r.get('admin1', '')}, {r['country']}"
 )
 
 if selected:

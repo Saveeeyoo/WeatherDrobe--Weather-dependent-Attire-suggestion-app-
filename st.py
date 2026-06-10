@@ -7,10 +7,10 @@ st.title("weather attire advisor")
 st.write("Enter a city name to get current weather conditions and attire suggestions.")
 city = st.text_input("City Name", key="city_input")
 if "choices" not in st.session_state:
-    st.session_state.choices = ()
+    st.session_state.choices = []
 
 if st.button("Get Weather"):
-    st.session_state.choices = tuple(get_coords(city))
+    st.session_state.choices = set(get_coords(city))
     
 selected = st.selectbox(
 "Choose location",

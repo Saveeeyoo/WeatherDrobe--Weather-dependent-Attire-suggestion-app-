@@ -5,10 +5,10 @@ if "choices" not in st.session_state:
     st.session_state.choices = []
 
 st.title("weather attire advisor")
-st.write("Enter a city name to get current weather conditions and attire suggestions.")
-city = st.text_input("City Name", key="city_input")
-if len(city) >= 3:
-    st.session_state.choices = get_coords(city)
+st.write("Enter a location name to get current weather conditions and attire suggestions.")
+location = st.text_input("location Name", key="location_input")
+if len(location) >= 3:
+    st.session_state.choices = get_coords(location)
     
 selected = st.selectbox(
 "Choose location",
